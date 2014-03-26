@@ -90,19 +90,19 @@ namespace Rick
             KeyboardState newState = Keyboard.GetState();  // get the newest state
 
             // handle the input
-            if (oldState.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left))
+            if (newState.IsKeyDown(Keys.Left))
             {
                 lilguy.position.X -= 5;
             }
-            if (oldState.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
+            if (newState.IsKeyDown(Keys.Right))
             {
                 lilguy.position.X += 5;
             }
-            if (oldState.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))
+            if (newState.IsKeyDown(Keys.Up))
             {
                 lilguy.position.Y -= 5;
             }
-            if (oldState.IsKeyUp(Keys.Down) && newState.IsKeyDown(Keys.Down))
+            if (newState.IsKeyDown(Keys.Down))
             {
                 lilguy.position.Y += 5;
             }

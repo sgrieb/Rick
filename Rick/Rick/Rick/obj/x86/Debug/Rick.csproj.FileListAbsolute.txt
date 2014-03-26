@@ -10,3 +10,15 @@ C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\Rick\bin\x86\Debu
 C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\Rick\bin\x86\Debug\Rick.application
 C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\Rick\obj\x86\Debug\Rick.exe.manifest
 C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\Rick\obj\x86\Debug\Rick.application
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\Koala.xnb
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\lilguy.xnb
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Rick.exe.manifest
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Rick.application
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Rick.exe
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Rick.pdb
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\obj\x86\Debug\Rick.csprojResolveAssemblyReference.cache
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\obj\x86\Debug\Rick.exe.manifest
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\obj\x86\Debug\Rick.application
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\obj\x86\Debug\Rick.exe
+C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\obj\x86\Debug\Rick.pdb

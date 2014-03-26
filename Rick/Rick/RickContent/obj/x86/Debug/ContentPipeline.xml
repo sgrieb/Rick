@@ -7,7 +7,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\Rick\bin\x86\Debug\Content\Koala.xnb</Output>
+      <Output>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\Koala.xnb</Output>
       <Time>2014-03-26T17:49:07.5145563-04:00</Time>
     </Item>
     <Item>
@@ -16,7 +16,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\Rick\bin\x86\Debug\Content\lilguy.xnb</Output>
+      <Output>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\lilguy.xnb</Output>
       <Time>2014-03-26T18:08:59.8227524-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
@@ -25,10 +25,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\RickContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\Rick\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\RickContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Steve\Documents\Visual Studio 2010\Projects\Rick\Rick\Rick\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\RickContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\RickContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
