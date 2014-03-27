@@ -19,6 +19,15 @@
       <Output>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\lilguy.xnb</Output>
       <Time>2014-03-26T18:08:59.8227524-04:00</Time>
     </Item>
+    <Item>
+      <Source>dickshot.png</Source>
+      <Name>dickshot</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\dickshot.xnb</Output>
+      <Time>2014-03-26T23:26:16.165569-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

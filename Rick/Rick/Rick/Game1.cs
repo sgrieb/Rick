@@ -20,6 +20,10 @@ namespace Rick
         SpriteBatch spriteBatch;
         DickThrower dickthrower;
         DickCatcher dickcatcher;
+        List<DickShot> dickshots = new List<DickShot>();
+        double dickshotTimer = 0;
+        int dickshotInterval = 2;
+        static DickShot dickshotTemplate;
         int screenPadding = 0;
 
 
@@ -29,7 +33,6 @@ namespace Rick
         {
             public Vector2 position;
             public Texture2D texture;
-            public string textureString;
             public Vector2 speed;
             public int MaxX;
             public int MinX = 0;
@@ -70,6 +73,26 @@ namespace Rick
             }
         }
 
+        public class DickShot : Sprite
+        {
+            public DickShot(Texture2D texture, int MaxX, int MaxY)
+            {
+
+                position = new Vector2(200, 200);
+                this.texture = texture;
+                this.MaxX = MaxX;
+                this.MaxY = MaxY;
+            }
+            public DickShot(Texture2D texture, int MaxX, int MaxY, Vector2 position)
+            {
+
+                this.position = position;
+                this.texture = texture;
+                this.MaxX = MaxX;
+                this.MaxY = MaxY;
+            }
+        }
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -103,7 +126,10 @@ namespace Rick
             dickthrower = new DickThrower(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width- screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
 
             dickcatcher = new DickCatcher(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
-            // TODO: use this.Content to load your game content here
+
+
+            texture = Content.Load<Texture2D>("dickshot");
+            dickshotTemplate = new DickShot(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
         }
 
         /// <summary>
@@ -125,6 +151,20 @@ namespace Rick
         {
             // Move the sprite by speed, scaled by elapsed time.
             dickthrower.position.X += dickthrower.speed.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            dickshotTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+            foreach (var shot in dickshots)
+            {
+                shot.position.Y += 3;
+            }
+
+
+
+            if (dickshotTimer >= dickshotInterval)
+            {
+                dickshots.Add(new DickShot(dickshotTemplate.texture, dickshotTemplate.MaxX, dickshotTemplate.MaxY,dickthrower.position));
+                dickshotTimer = 0;
+            }
 
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
@@ -147,8 +187,6 @@ namespace Rick
                 }
             }
 
-            oldState = newState;  // set the new state as the old state for next time
-
             // Check for bounce.
             if (dickthrower.position.X > dickthrower.MaxX)
             {
@@ -161,6 +199,8 @@ namespace Rick
                 dickthrower.speed.X *= -1;
                 dickthrower.position.X = dickthrower.MinX;
             }
+
+            oldState = newState;  // set the new state as the old state for next time
 
             base.Update(gameTime);
         }
@@ -178,6 +218,11 @@ namespace Rick
             spriteBatch.Draw(dickthrower.texture, dickthrower.position, Color.White);
 
             spriteBatch.Draw(dickcatcher.texture, dickcatcher.position, Color.White);
+
+            foreach (var shot in dickshots)
+            {
+                spriteBatch.Draw(dickshotTemplate.texture, shot.position, Color.White);
+            }
 
             spriteBatch.End();
 

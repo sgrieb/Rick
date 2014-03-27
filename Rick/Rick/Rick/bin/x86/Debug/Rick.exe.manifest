@@ -93,17 +93,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Rick.exe" size="11776">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Rick.exe" size="12800">
       <assemblyIdentity name="Rick" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>0dTb+CPnJCtkCQ+xfxy8ufpS0EQ=</dsig:DigestValue>
+        <dsig:DigestValue>QLw83bWPVGKLBC7ka3uHwAldIQk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="Content\dickshot.xnb" size="6843">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>E7FhlAg0vt98BMoKfpsL2ITKwFE=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\Koala.xnb" size="3145915">
     <hash>
       <dsig:Transforms>
