@@ -18,7 +18,10 @@ namespace Rick
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Sprite lilguy;
+        DickThrower dickthrower;
+        DickCatcher dickcatcher;
+        int screenPadding = 0;
+
 
         private KeyboardState oldState;
 
@@ -26,12 +29,45 @@ namespace Rick
         {
             public Vector2 position;
             public Texture2D texture;
-            public Sprite(Vector2 position, Texture2D texture)
+            public string textureString;
+            public Vector2 speed;
+            public int MaxX;
+            public int MinX = 0;
+            public int MaxY;
+            public int MinY = 0;
+            public Sprite()
             {
-                this.position = position;
-                this.texture = texture;
             }
+            public Sprite (Texture2D texture, int MaxX, int MaxY)
+            {
+                this.texture = texture;
+                this.MaxX = MaxX;
+                this.MaxY = MaxY;
+            }
+        }
 
+        public class DickThrower:Sprite
+        {
+            public DickThrower(Texture2D texture, int MaxX, int MaxY)
+            {
+                speed = new Vector2(500, 0);
+                position = new Vector2(100, 50);
+                this.texture = texture;
+                this.MaxX = MaxX;
+                this.MaxY = MaxY;
+            }
+        }
+
+        public class DickCatcher : Sprite
+        {
+            public DickCatcher(Texture2D texture, int MaxX, int MaxY)
+            {
+                
+                position = new Vector2(100, 425);
+                this.texture = texture;
+                this.MaxX = MaxX;
+                this.MaxY = MaxY;
+            }
         }
 
         public Game1()
@@ -61,7 +97,12 @@ namespace Rick
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            lilguy = new Sprite(new Vector2(0, 0),  Content.Load<Texture2D>("lilguy"));
+            
+
+            Texture2D texture = Content.Load<Texture2D>("lilguy");
+            dickthrower = new DickThrower(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width- screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
+
+            dickcatcher = new DickCatcher(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
             // TODO: use this.Content to load your game content here
         }
 
@@ -82,32 +123,44 @@ namespace Rick
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            // Move the sprite by speed, scaled by elapsed time.
+            dickthrower.position.X += dickthrower.speed.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
             KeyboardState newState = Keyboard.GetState();  // get the newest state
 
-            // handle the input
             if (newState.IsKeyDown(Keys.Left))
             {
-                lilguy.position.X -= 5;
+                if (dickcatcher.position.X - 5 > dickcatcher.MinX)
+                {
+                    dickcatcher.position.X -= 5;
+                }
             }
-            if (newState.IsKeyDown(Keys.Right))
+            else if (newState.IsKeyDown(Keys.Right))
             {
-                lilguy.position.X += 5;
-            }
-            if (newState.IsKeyDown(Keys.Up))
-            {
-                lilguy.position.Y -= 5;
-            }
-            if (newState.IsKeyDown(Keys.Down))
-            {
-                lilguy.position.Y += 5;
+                if (dickcatcher.position.X + 5 < dickcatcher.MaxX)
+                {
+                    dickcatcher.position.X += 5;
+                }
             }
 
             oldState = newState;  // set the new state as the old state for next time
+
+            // Check for bounce.
+            if (dickthrower.position.X > dickthrower.MaxX)
+            {
+                dickthrower.speed.X *= -1;
+                dickthrower.position.X = dickthrower.MaxX;
+            }
+
+            else if (dickthrower.position.X <dickthrower. MinX)
+            {
+                dickthrower.speed.X *= -1;
+                dickthrower.position.X = dickthrower.MinX;
+            }
 
             base.Update(gameTime);
         }
@@ -122,7 +175,9 @@ namespace Rick
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(lilguy.texture, lilguy.position, Color.White);
+            spriteBatch.Draw(dickthrower.texture, dickthrower.position, Color.White);
+
+            spriteBatch.Draw(dickcatcher.texture, dickcatcher.position, Color.White);
 
             spriteBatch.End();
 
