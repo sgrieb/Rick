@@ -37,6 +37,24 @@
       <Output>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\default.xnb</Output>
       <Time>2014-03-27T20:01:25.681851-04:00</Time>
     </Item>
+    <Item>
+      <Source>caveman.png</Source>
+      <Name>caveman</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\caveman.xnb</Output>
+      <Time>2014-03-28T15:21:19.8844117-04:00</Time>
+    </Item>
+    <Item>
+      <Source>bin.png</Source>
+      <Name>bin</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Steve\Documents\GitHub\Rick\Rick\Rick\Rick\bin\x86\Debug\Content\bin.xnb</Output>
+      <Time>2014-03-28T16:03:47.2651136-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

@@ -8,22 +8,20 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Rick.Model;
 
 namespace Rick
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        DickThrower dickthrower;
-        DickCatcher dickcatcher;
-        List<DickShot> dickshots = new List<DickShot>();
-        double dickshotTimer = 0;
-        int dickshotInterval = 2;
-        static DickShot dickshotTemplate;
+        Thrower thrower;
+        Catcher catcher;
+        List<Shot> shots = new List<Shot>();
+        double shotTimer = 0;
+        int shotInterval = 2;
+        static Texture2D shotTexture;
         int screenPadding = 0;
         private SpriteFont font;
         private int score = 0;
@@ -32,75 +30,7 @@ namespace Rick
 
         private KeyboardState oldState;
 
-        public class Sprite
-        {
-            public Vector2 position;
-            public Texture2D texture;
-            public Vector2 speed;
-            public int MaxX;
-            public int MinX = 0;
-            public int MaxY;
-            public int MinY = 0;
-            public Rectangle boundingBox;
-            public Sprite()
-            {
-            }
-            public Sprite (Texture2D texture, int MaxX, int MaxY)
-            {
-                this.texture = texture;
-                this.MaxX = MaxX;
-                this.MaxY = MaxY;
-                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
-            }
-        }
-
-        public class DickThrower:Sprite
-        {
-            public DickThrower(Texture2D texture, int MaxX, int MaxY)
-            {
-                speed = new Vector2(500, 0);
-                position = new Vector2(100, 50);
-                this.texture = texture;
-                this.MaxX = MaxX;
-                this.MaxY = MaxY;
-                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
-            }
-        }
-
-        public class DickCatcher : Sprite
-        {
-            public DickCatcher(Texture2D texture, int MaxX, int MaxY)
-            {
-                
-                position = new Vector2(100, 425);
-                this.texture = texture;
-                this.MaxX = MaxX;
-                this.MaxY = MaxY;
-                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
-            }
-        }
-
-        public class DickShot : Sprite
-        {
-            public DickShot(Texture2D texture, int MaxX, int MaxY)
-            {
-
-                position = new Vector2(200, 200);
-                this.texture = texture;
-                this.MaxX = MaxX;
-                this.MaxY = MaxY;
-                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
-            }
-            public DickShot(Texture2D texture, int MaxX, int MaxY, Vector2 position)
-            {
-
-                this.position = position;
-                this.texture = texture;
-                this.MaxX = MaxX;
-                this.MaxY = MaxY;
-                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
-            }
-        }
+        
 
         public Game1()
         {
@@ -135,13 +65,16 @@ namespace Rick
             koala = Content.Load<Texture2D>("koala");
 
             Texture2D texture = Content.Load<Texture2D>("lilguy");
-            dickthrower = new DickThrower(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width- screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
-
-            dickcatcher = new DickCatcher(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
+            thrower = new Thrower(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width- screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
 
 
-            texture = Content.Load<Texture2D>("dickshot");
-            dickshotTemplate = new DickShot(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
+            Texture2D caveman = Content.Load<Texture2D>("bin");
+            catcher = new Catcher(caveman, 2, 4);
+            catcher.MaxX = graphics.GraphicsDevice.Viewport.Width - catcher.frameWidth - screenPadding;
+            catcher.MaxY = graphics.GraphicsDevice.Viewport.Height - catcher.frameHeight - screenPadding;
+
+            shotTexture = Content.Load<Texture2D>("dickshot");
+            //shotTemplate = new Shot(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
         }
 
         /// <summary>
@@ -161,100 +94,115 @@ namespace Rick
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //this is getting disorganized fast.  im going to seperate things soon
+            // Allows the game to exit
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                this.Exit();
+
 
             // Move the sprite by speed, scaled by elapsed time.
-            dickthrower.position.X += dickthrower.speed.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            thrower.position.X += thrower.speed.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            dickshotTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            shotTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            //make dickshots move down
-            foreach (var shot in dickshots)
+            //make shots move down
+            foreach (var shot in shots)
             {
                 shot.position.Y += 3;
                 shot.boundingBox.Y += 3;
             }
 
-            //if the timer is up, shoot a dickshot
-            if (dickshotTimer >= dickshotInterval)
+            //if the timer is up, shoot a shot
+            if (shotTimer >= shotInterval)
             {
-                dickshots.Add(new DickShot(dickshotTemplate.texture, dickshotTemplate.MaxX, dickshotTemplate.MaxY,dickthrower.position));
-                dickshotTimer = 0;
+                shots.Add(new Shot(shotTexture, graphics.GraphicsDevice.Viewport.Width - shotTexture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - shotTexture.Height - screenPadding, thrower.position));
+                shotTimer = 0;
             }
-
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
 
             KeyboardState newState = Keyboard.GetState();  // get the newest state
 
             if (newState.IsKeyDown(Keys.Left))
             {
-                if (dickcatcher.position.X - 5 > dickcatcher.MinX)
+                if (catcher.position.X - 5 > catcher.MinX)
                 {
-                    dickcatcher.position.X -= 5;
-                    dickcatcher.boundingBox.X -= 5;
+                    catcher.position.X -= 5;
+                    catcher.boundingBox.X -= 5;
+                    if (catcher.frameStagger < 3)
+                    {
+                        catcher.frameStagger++;
+                    }
+                    else
+                    {
+                        catcher.Update();
+                        catcher.frameStagger = 0;
+                    }
                 }
             }
             else if (newState.IsKeyDown(Keys.Right))
             {
-                if (dickcatcher.position.X + 5 < dickcatcher.MaxX)
+                if (catcher.position.X + 5 < catcher.MaxX)
                 {
-                    dickcatcher.position.X += 5;
-                    dickcatcher.boundingBox.X += 5;
+                    catcher.position.X += 5;
+                    catcher.boundingBox.X += 5;
+                    if (catcher.frameStagger < 3)
+                    {
+                        catcher.frameStagger++;
+                    }
+                    else
+                    {
+                        catcher.Update();
+                        catcher.frameStagger = 0;
+                    }
                 }
             }
 
             // Check for bounce.
-            if (dickthrower.position.X > dickthrower.MaxX)
+            if (thrower.position.X > thrower.MaxX)
             {
-                dickthrower.speed.X *= -1;
-                dickthrower.position.X = dickthrower.MaxX;
+                thrower.speed.X *= -1;
+                thrower.position.X = thrower.MaxX;
             }
 
-            else if (dickthrower.position.X <dickthrower. MinX)
+            else if (thrower.position.X <thrower. MinX)
             {
-                dickthrower.speed.X *= -1;
-                dickthrower.position.X = dickthrower.MinX;
+                thrower.speed.X *= -1;
+                thrower.position.X = thrower.MinX;
             }
 
-            //check if dickshots hit dickcatcher
-            for (int i = 0; i < dickshots.Count;i++)
+            //check if shots hit catcher
+            for (int i = 0; i < shots.Count;i++)
             {
-                if (dickshots[i].boundingBox.Intersects(dickcatcher.boundingBox))
+                if (shots[i].boundingBox.Intersects(catcher.boundingBox))
                 {
                     score++;
-                    dickshots.Remove(dickshots[i]);
+                    shots.Remove(shots[i]);
                     i--;
                 }
             }
+
+            
 
             oldState = newState;  // set the new state as the old state for next time
 
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(dickthrower.texture, dickthrower.position, Color.White);
+            spriteBatch.Draw(thrower.texture, thrower.position, Color.White);
 
-            spriteBatch.Draw(dickcatcher.texture, dickcatcher.position, Color.White);
-
-            spriteBatch.Draw(koala, dickcatcher.boundingBox, Color.White);
+            //spriteBatch.Draw(catcher.texture, catcher.position, Color.White);
+            catcher.Draw(spriteBatch, catcher.position);
+            //spriteBatch.Draw(koala, catcher.boundingBox, Color.White);
 
             spriteBatch.DrawString(font, "Score: "+ score.ToString(), new Vector2(10, 10), Color.Black);
 
-            foreach (var shot in dickshots)
+            foreach (var shot in shots)
             {
-                spriteBatch.Draw(dickshotTemplate.texture, shot.position, Color.White);
+                spriteBatch.Draw(shotTexture, shot.position, Color.White);
             }
 
             spriteBatch.End();

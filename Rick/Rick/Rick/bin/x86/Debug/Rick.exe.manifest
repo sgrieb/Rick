@@ -93,17 +93,35 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Rick.exe" size="13824">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Rick.exe" size="14848">
       <assemblyIdentity name="Rick" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>eWjC7Qbb1MtSlgQXhVpikL6uFog=</dsig:DigestValue>
+        <dsig:DigestValue>3bhtUylnDf/jZESZqtabPUoyBjc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="Content\bin.xnb" size="455003">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>9fyjUYPP63arDp9jsU2bv7SPXes=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\caveman.xnb" size="455003">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>N4JjfzFCecrq1AImrYIEmUaYQ0Y=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\default.xnb" size="20142">
     <hash>
       <dsig:Transforms>
