@@ -25,7 +25,10 @@ namespace Rick
         int dickshotInterval = 2;
         static DickShot dickshotTemplate;
         int screenPadding = 0;
+        private SpriteFont font;
+        private int score = 0;
 
+        public Texture2D koala;
 
         private KeyboardState oldState;
 
@@ -38,6 +41,7 @@ namespace Rick
             public int MinX = 0;
             public int MaxY;
             public int MinY = 0;
+            public Rectangle boundingBox;
             public Sprite()
             {
             }
@@ -46,6 +50,7 @@ namespace Rick
                 this.texture = texture;
                 this.MaxX = MaxX;
                 this.MaxY = MaxY;
+                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
             }
         }
 
@@ -58,6 +63,7 @@ namespace Rick
                 this.texture = texture;
                 this.MaxX = MaxX;
                 this.MaxY = MaxY;
+                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
             }
         }
 
@@ -70,6 +76,7 @@ namespace Rick
                 this.texture = texture;
                 this.MaxX = MaxX;
                 this.MaxY = MaxY;
+                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
             }
         }
 
@@ -82,6 +89,7 @@ namespace Rick
                 this.texture = texture;
                 this.MaxX = MaxX;
                 this.MaxY = MaxY;
+                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
             }
             public DickShot(Texture2D texture, int MaxX, int MaxY, Vector2 position)
             {
@@ -90,6 +98,7 @@ namespace Rick
                 this.texture = texture;
                 this.MaxX = MaxX;
                 this.MaxY = MaxY;
+                this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
             }
         }
 
@@ -120,7 +129,10 @@ namespace Rick
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
+            font = Content.Load<SpriteFont>("default"); // Use the name of your sprite font file here
+
+            koala = Content.Load<Texture2D>("koala");
 
             Texture2D texture = Content.Load<Texture2D>("lilguy");
             dickthrower = new DickThrower(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width- screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
@@ -149,17 +161,21 @@ namespace Rick
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //this is getting disorganized fast.  im going to seperate things soon
+
             // Move the sprite by speed, scaled by elapsed time.
             dickthrower.position.X += dickthrower.speed.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             dickshotTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
+            //make dickshots move down
             foreach (var shot in dickshots)
             {
                 shot.position.Y += 3;
+                shot.boundingBox.Y += 3;
             }
 
-
-
+            //if the timer is up, shoot a dickshot
             if (dickshotTimer >= dickshotInterval)
             {
                 dickshots.Add(new DickShot(dickshotTemplate.texture, dickshotTemplate.MaxX, dickshotTemplate.MaxY,dickthrower.position));
@@ -177,6 +193,7 @@ namespace Rick
                 if (dickcatcher.position.X - 5 > dickcatcher.MinX)
                 {
                     dickcatcher.position.X -= 5;
+                    dickcatcher.boundingBox.X -= 5;
                 }
             }
             else if (newState.IsKeyDown(Keys.Right))
@@ -184,6 +201,7 @@ namespace Rick
                 if (dickcatcher.position.X + 5 < dickcatcher.MaxX)
                 {
                     dickcatcher.position.X += 5;
+                    dickcatcher.boundingBox.X += 5;
                 }
             }
 
@@ -198,6 +216,17 @@ namespace Rick
             {
                 dickthrower.speed.X *= -1;
                 dickthrower.position.X = dickthrower.MinX;
+            }
+
+            //check if dickshots hit dickcatcher
+            for (int i = 0; i < dickshots.Count;i++)
+            {
+                if (dickshots[i].boundingBox.Intersects(dickcatcher.boundingBox))
+                {
+                    score++;
+                    dickshots.Remove(dickshots[i]);
+                    i--;
+                }
             }
 
             oldState = newState;  // set the new state as the old state for next time
@@ -218,6 +247,10 @@ namespace Rick
             spriteBatch.Draw(dickthrower.texture, dickthrower.position, Color.White);
 
             spriteBatch.Draw(dickcatcher.texture, dickcatcher.position, Color.White);
+
+            spriteBatch.Draw(koala, dickcatcher.boundingBox, Color.White);
+
+            spriteBatch.DrawString(font, "Score: "+ score.ToString(), new Vector2(10, 10), Color.Black);
 
             foreach (var shot in dickshots)
             {
