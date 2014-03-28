@@ -69,7 +69,7 @@ namespace Rick
 
 
             Texture2D caveman = Content.Load<Texture2D>("bin");
-            catcher = new Catcher(caveman, 2, 4);
+            catcher = new Catcher(caveman, 2, 8);
             catcher.MaxX = graphics.GraphicsDevice.Viewport.Width - catcher.frameWidth - screenPadding;
             catcher.MaxY = graphics.GraphicsDevice.Viewport.Height - catcher.frameHeight - screenPadding;
 
@@ -132,7 +132,7 @@ namespace Rick
                     }
                     else
                     {
-                        catcher.Update();
+                        catcher.Update("LEFT");
                         catcher.frameStagger = 0;
                     }
                 }
@@ -149,7 +149,7 @@ namespace Rick
                     }
                     else
                     {
-                        catcher.Update();
+                        catcher.Update("RIGHT");
                         catcher.frameStagger = 0;
                     }
                 }

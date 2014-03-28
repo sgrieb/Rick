@@ -36,6 +36,7 @@ namespace Rick.Model
         public int frameHeight { get; set; }
         public int frameWidth { get; set; }
         public int frameStagger = 3;
+        public string oldDirection { get; set; }
         private int currentFrame;
         private int totalFrames;
         public AnimatedSprite(Texture2D texture, int rows, int columns)
@@ -48,11 +49,34 @@ namespace Rick.Model
             frameWidth = texture.Width / Columns;
             frameHeight = texture.Height / Rows;
         }
-        public void Update()
+        public void Update(string direction)
         {
-            currentFrame++;
-            if (currentFrame == totalFrames)
-                currentFrame = 0;
+
+            if (direction == oldDirection)
+            {
+                currentFrame++;
+                if (direction == "RIGHT" && currentFrame == Columns - 1)
+                {
+                    currentFrame = 0;
+                }
+                else if (direction == "LEFT" && currentFrame == Columns * 2 - 1)
+                {
+                    currentFrame = Columns + 1;
+                }
+
+            }
+            else
+            {
+                if (direction == "LEFT")
+                {
+                    currentFrame = Columns + 1;
+                }
+                else if (direction == "RIGHT")
+                {
+                    currentFrame = 0;
+                }
+            }
+            oldDirection = direction;
         }
         public void Draw(SpriteBatch spriteBatch, Vector2 location)
         {
@@ -61,6 +85,7 @@ namespace Rick.Model
 
             Rectangle sourceRectangle = new Rectangle(frameWidth * column, frameHeight * row, frameWidth, frameHeight);
             Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y, frameWidth, frameHeight);
+
 
 
             spriteBatch.Draw(texture, destinationRectangle, sourceRectangle, Color.White);
@@ -82,7 +107,7 @@ namespace Rick.Model
 
             this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
         }
-        public new Vector2 position = new Vector2(100, 325);
+        public new Vector2 position = new Vector2(100, 425);
     }
 
     public class Shot : Sprite
