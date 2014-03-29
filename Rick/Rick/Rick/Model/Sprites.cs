@@ -104,10 +104,9 @@ namespace Rick.Model
     {
         public Catcher(Texture2D texture, int rows, int columns):base(texture, rows, columns)
         {
-
-            this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
+            position = new Vector2(100, 425);
         }
-        public new Vector2 position = new Vector2(100, 425);
+        
     }
 
     public class Shot : Sprite

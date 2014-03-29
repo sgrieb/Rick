@@ -25,7 +25,7 @@ namespace Rick
         int screenPadding = 0;
         private SpriteFont font;
         private int score = 0;
-
+        private int groundY = 425;
         public Texture2D koala;
 
         private KeyboardState oldState;
@@ -72,9 +72,19 @@ namespace Rick
             catcher = new Catcher(caveman, 2, 8);
             catcher.MaxX = graphics.GraphicsDevice.Viewport.Width - catcher.frameWidth - screenPadding;
             catcher.MaxY = graphics.GraphicsDevice.Viewport.Height - catcher.frameHeight - screenPadding;
+            catcher.boundingBox = new Rectangle((int)catcher.position.X, (int)catcher.position.Y, catcher.frameWidth, catcher.frameHeight);
 
             shotTexture = Content.Load<Texture2D>("dickshot");
             //shotTemplate = new Shot(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
+        }
+
+        private void Gravity(Sprite sprite)
+        {
+            if (sprite.position.Y + 5 < groundY)
+            {
+                sprite.position.Y += 5;
+                sprite.boundingBox.Y += 5;
+            }
         }
 
         /// <summary>
@@ -120,7 +130,18 @@ namespace Rick
 
             KeyboardState newState = Keyboard.GetState();  // get the newest state
 
-            if (newState.IsKeyDown(Keys.Left))
+            //catcher actions
+            //jumping :)
+            if (!newState.IsKeyDown(Keys.Space) && oldState.IsKeyDown(Keys.Space))
+            {
+                if (catcher.position.X - 5 > catcher.MinX)
+                {
+                    catcher.position.Y -= 100;
+                    catcher.boundingBox.Y -= 100;
+                    
+                }
+            }
+            if (newState.IsKeyDown(Keys.Left) || newState.IsKeyDown(Keys.A))
             {
                 if (catcher.position.X - 5 > catcher.MinX)
                 {
@@ -137,7 +158,7 @@ namespace Rick
                     }
                 }
             }
-            else if (newState.IsKeyDown(Keys.Right))
+            else if (newState.IsKeyDown(Keys.Right) || newState.IsKeyDown(Keys.D))
             {
                 if (catcher.position.X + 5 < catcher.MaxX)
                 {
@@ -154,6 +175,7 @@ namespace Rick
                     }
                 }
             }
+            Gravity(catcher);
 
             // Check for bounce.
             if (thrower.position.X > thrower.MaxX)
@@ -194,7 +216,6 @@ namespace Rick
 
             spriteBatch.Draw(thrower.texture, thrower.position, Color.White);
 
-            //spriteBatch.Draw(catcher.texture, catcher.position, Color.White);
             catcher.Draw(spriteBatch, catcher.position);
             //spriteBatch.Draw(koala, catcher.boundingBox, Color.White);
 
