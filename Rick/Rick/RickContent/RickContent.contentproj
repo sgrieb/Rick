@@ -77,8 +77,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bin.png">
-      <Name>bin</Name>
+    <Compile Include="ground.png">
+      <Name>ground</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

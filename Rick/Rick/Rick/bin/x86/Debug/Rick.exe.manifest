@@ -93,33 +93,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Rick.exe" size="15872">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Rick.exe" size="16384">
       <assemblyIdentity name="Rick" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>RW/y459hqFlHzEelyAkEI9QEh9c=</dsig:DigestValue>
+        <dsig:DigestValue>J3arNEfNG7/69hdLCkY+B9sSF1A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Content\bin.xnb" size="188827">
+  <file name="Content\caveman.xnb" size="188827">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>2NEFuk4uJC5yw3nd7oOEMs0r67U=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Content\caveman.xnb" size="455003">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>N4JjfzFCecrq1AImrYIEmUaYQ0Y=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\default.xnb" size="20142">
@@ -138,6 +129,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>E7FhlAg0vt98BMoKfpsL2ITKwFE=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\ground.xnb" size="121531">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>lwdQKG8eYl7QFBGTv++EULSmEhA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Koala.xnb" size="3145915">

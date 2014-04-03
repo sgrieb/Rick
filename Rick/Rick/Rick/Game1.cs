@@ -18,6 +18,7 @@ namespace Rick
         SpriteBatch spriteBatch;
         Thrower thrower;
         Catcher catcher;
+        Ground ground;
         List<Shot> shots = new List<Shot>();
         double shotTimer = 0;
         int shotInterval = 2;
@@ -27,6 +28,7 @@ namespace Rick
         private int score = 0;
         private int groundY = 425;
         public Texture2D koala;
+
 
         private KeyboardState oldState;
 
@@ -64,23 +66,31 @@ namespace Rick
 
             koala = Content.Load<Texture2D>("koala");
 
+            var groundTexture = Content.Load<Texture2D>("ground");
+
+            ground = new Ground(groundTexture, graphics.GraphicsDevice.Viewport.Width - groundTexture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - groundTexture.Height - screenPadding, new Vector2(0, graphics.GraphicsDevice.Viewport.Height - groundTexture.Height)); 
+
             Texture2D texture = Content.Load<Texture2D>("lilguy");
             thrower = new Thrower(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width- screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
 
 
-            Texture2D caveman = Content.Load<Texture2D>("bin");
+            groundY = graphics.GraphicsDevice.Viewport.Height - groundTexture.Height;
+            Texture2D caveman = Content.Load<Texture2D>("caveman");
             catcher = new Catcher(caveman, 2, 8);
-            catcher.MaxX = graphics.GraphicsDevice.Viewport.Width - catcher.frameWidth - screenPadding;
-            catcher.MaxY = graphics.GraphicsDevice.Viewport.Height - catcher.frameHeight - screenPadding;
+            catcher.position = new Vector2(100, graphics.GraphicsDevice.Viewport.Height - groundTexture.Height - caveman.Height);
+            catcher.MaxX = graphics.GraphicsDevice.Viewport.Width - catcher.frameWidth - screenPadding ;
+            catcher.MaxY = graphics.GraphicsDevice.Viewport.Height - catcher.frameHeight - screenPadding - groundTexture.Height - caveman.Height;
             catcher.boundingBox = new Rectangle((int)catcher.position.X, (int)catcher.position.Y, catcher.frameWidth, catcher.frameHeight);
 
             shotTexture = Content.Load<Texture2D>("dickshot");
+            
             //shotTemplate = new Shot(texture, graphics.GraphicsDevice.Viewport.Width - texture.Width - screenPadding, graphics.GraphicsDevice.Viewport.Height - texture.Height - screenPadding);
         }
 
         private void Gravity(Sprite sprite)
         {
-            if (sprite.position.Y + 5 < groundY)
+            //not sure why this works and dont feel like figuring it out right now
+            if (sprite.position.Y + ground.texture.Height*2 < groundY)
             {
                 sprite.position.Y += 5;
                 sprite.boundingBox.Y += 5;
@@ -110,6 +120,7 @@ namespace Rick
 
 
             // Move the sprite by speed, scaled by elapsed time.
+            //i dont think this does anyhting right now because there is no speed
             thrower.position.X += thrower.speed.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             shotTimer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -177,7 +188,7 @@ namespace Rick
             }
             Gravity(catcher);
 
-            // Check for bounce.
+            // Check for window boundaries
             if (thrower.position.X > thrower.MaxX)
             {
                 thrower.speed.X *= -1;
@@ -203,7 +214,7 @@ namespace Rick
 
             
 
-            oldState = newState;  // set the new state as the old state for next time
+            oldState = newState;  // set the old state as the new state for next time
 
             base.Update(gameTime);
         }
@@ -216,7 +227,11 @@ namespace Rick
 
             spriteBatch.Draw(thrower.texture, thrower.position, Color.White);
 
+            spriteBatch.Draw(ground.texture, ground.position, Color.White);
+
             catcher.Draw(spriteBatch, catcher.position);
+
+            //you can use this line below to test bounding boxes and shite
             //spriteBatch.Draw(koala, catcher.boundingBox, Color.White);
 
             spriteBatch.DrawString(font, "Score: "+ score.ToString(), new Vector2(10, 10), Color.Black);
@@ -227,8 +242,6 @@ namespace Rick
             }
 
             spriteBatch.End();
-
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

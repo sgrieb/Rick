@@ -120,4 +120,16 @@ namespace Rick.Model
             this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
         }
     }
+
+    public class Ground : Sprite
+    {
+        public Ground(Texture2D texture, int MaxX, int MaxY, Vector2 position)
+            : base(texture, MaxX, MaxY)
+        {
+            this.MaxX = MaxX;
+            this.MaxY = MaxY;
+            this.position = position;
+            this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, texture.Width, texture.Height);
+        }
+    }
 }
